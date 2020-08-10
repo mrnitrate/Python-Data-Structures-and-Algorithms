@@ -1,9 +1,4 @@
 repos:
-  - repo: https://github.com/d-ryzhikov/pipenv-lock-pre-commit
-    rev: 0.1.0
-    hooks:
-      - id: pipenv-lock
-
   - repo: https://github.com/asottile/dead
     rev: v1.3.0
     hooks:
