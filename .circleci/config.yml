@@ -20,11 +20,16 @@ jobs:
           key: deps9-{{ .Branch }}-{{ checksum ".pre-commit-config.yaml" }}
       - run:
           command: |
-            pipenv run pre-commit autoupdate
+            pipenv run pre-commit run --all-files
       - save_cache:
           key: deps9-{{ .Branch }}-{{ checksum ".pre-commit-config.yaml" }}
           paths:
             - "~/.cache/pre-commit"
       - run:
           command: |
-            pipenv run pre-commit run --all-files
+            pipenv run python -m unittest discover -v
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: tr1
