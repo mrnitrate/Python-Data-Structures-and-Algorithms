@@ -16,7 +16,15 @@ jobs:
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
             - "venv"
-            - '~/.cache/pre-commit'
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum ".pre-commit-config.yaml" }}
+      - run:
+          command: |
+            pipenv run pre-commit autoupdate
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum ".pre-commit-config.yaml" }}
+          paths:
+            - "~/.cache/pre-commit"
       - run:
           command: |
             pipenv run pre-commit run --all-files
